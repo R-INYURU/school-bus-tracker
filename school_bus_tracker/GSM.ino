@@ -1,4 +1,4 @@
-boolean mqttConnect() {
+/*boolean mqttConnect() {
   Serial.print("Connecting to ");
   Serial.print(broker);
   if (!mqtt.connect(deviceID)) {
@@ -13,25 +13,25 @@ boolean mqttConnect() {
   mqtt.subscribe(topicjourney);
   mqtt.subscribe(topicsettings);
   return mqtt.connected();
-}
+}*/
 
-void mqttCallback(char* topic, byte* payload, unsigned int len) {
+/*void mqttCallback(char* topic, byte* payload, unsigned int len) {
   String journey;
   for (unsigned int c = 0; c < len; c++) {
     journey += (char)payload[c];
   }
   Serial.print("topic data= ");
   Serial.println(journey);
-}
+}*/
 
 JsonObject& createJson(JsonBuffer& jsonBuffer){
   JsonObject& Object = jsonBuffer.createObject();
   Object["deviceID"] = deviceID;
   refreshGPS();
-  JsonArray& Array = Object.createNestedArray("gpsData");
-  Array.add(gps.location.lat(), 8);
-  Array.add(gps.location.lng(), 8);
-  Array.add(gps.speed.kmph(), 4);
+  JsonArray& GPS = Object.createNestedArray("gpsData");
+  GPS.add(gps.location.lat());
+  GPS.add(gps.location.lng());
+  GPS.add(gps.speed.kmph());
   Object["cardID"] = Uid;
   Object["student#"] = stdntNo;
 
@@ -39,3 +39,4 @@ JsonObject& createJson(JsonBuffer& jsonBuffer){
   
   return Object;
 }
+

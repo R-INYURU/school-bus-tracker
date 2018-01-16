@@ -8,8 +8,8 @@ void refreshGPS() {
 void smartDelay(unsigned long ms) {
   unsigned long start = millis();
   do {
-    while (Serial2.available())
-      gps.encode(Serial2.read());
+    while (GPS_Serial.available())
+      gps.encode(GPS_Serial.read());
   } while (millis() - start < ms);
 }
 
